@@ -1,6 +1,6 @@
 #from site https://lorenabarba.com/blog/cfd-python-12-steps-to-navier-stokes/
 import numpy
-from matplotlib import pyplot, cm
+from matplotlib import pyplot as plt, cm
 #from mpl_toolkits.mplot3d import Axes3D
 nx = 41
 ny = 41
@@ -22,8 +22,8 @@ v = numpy.zeros((ny, nx))
 p = numpy.zeros((ny, nx))
 b = numpy.zeros((ny, nx))
 
-'''The pressure Poisson equation that's written above can be hard to write out without typos. 
-The function build_up_b below represents the contents of the square brackets, 
+'''The pressure Poisson equation that's written above can be hard to write out without typos.
+The function build_up_b below represents the contents of the square brackets,
 so that the entirety of the PPE is slightly more manageable'''
 def build_up_b(b, rho, dt, u, v, dx, dy):
     b[1:-1, 1:-1] = (rho * (1 / dt *
@@ -106,36 +106,36 @@ def cavity_flow(nt, u, v, dt, dx, dy, p, rho, nu):
 
 u, v, p = cavity_flow(nt, u, v, dt, dx, dy, p, rho, nu)
 
-fig = pyplot.figure(figsize=(11,7), dpi=100)
+fig = plt.figure(figsize=(11,7), dpi=100)
 # plotting the pressure field as a contour
-pyplot.contourf(X, Y, p, alpha=0.5, cmap=cm.viridis)
-pyplot.colorbar()
+plt.contourf(X, Y, p, alpha=0.5, cmap=cm.viridis)
+plt.colorbar()
 # plotting the pressure field outlines
-pyplot.contour(X, Y, p, cmap=cm.viridis)
+plt.contour(X, Y, p, cmap=cm.viridis)
 # plotting velocity field
-pyplot.quiver(X[::2, ::2], Y[::2, ::2], u[::2, ::2], v[::2, ::2])
-'''The quiver plot shows the magnitude of the velocity at the discrete points in the mesh grid we created. 
-(We're actually only showing half of the points because otherwise it's a bit of a mess. 
+plt.quiver(X[::2, ::2], Y[::2, ::2], u[::2, ::2], v[::2, ::2])
+'''The quiver plot shows the magnitude of the velocity at the discrete points in the mesh grid we created.
+(We're actually only showing half of the points because otherwise it's a bit of a mess.
     The X[::2, ::2] syntax above is a convenient way to ask for every other point.)'''
-pyplot.xlabel('X')
-pyplot.ylabel('Y')
+plt.xlabel('X')
+plt.ylabel('Y')
 #plotting streamplot
-fig = pyplot.figure(figsize=(11, 7), dpi=100)
-pyplot.contourf(X, Y, p, alpha=0.5, cmap=cm.viridis)
-pyplot.colorbar()
-pyplot.contour(X, Y, p, cmap=cm.viridis)
-pyplot.streamplot(X, Y, u, v)
-pyplot.xlabel('X')
-pyplot.ylabel('Y')
+fig = plt.figure(figsize=(11, 7), dpi=100)
+plt.contourf(X, Y, p, alpha=0.5, cmap=cm.viridis)
+plt.colorbar()
+plt.contour(X, Y, p, cmap=cm.viridis)
+plt.streamplot(X, Y, u, v)
+plt.xlabel('X')
+plt.ylabel('Y')
 
 z[0:,0:]=pow((pow((u[0:,0:]),2)+pow((v[0:,0:]),2)),0.5)
-fig = pyplot.figure(figsize=(11,7), dpi=100)
+fig = plt.figure(figsize=(11,7), dpi=100)
 # plotting the pressure field as a contour
-pyplot.contourf(X, Y, z, cmap=cm.hsv)
-pyplot.colorbar()
+plt.contourf(X, Y, z, cmap=cm.hsv)
+plt.colorbar()
 # plotting velocity field
-pyplot.quiver(X[::2, ::2], Y[::2, ::2], u[::2, ::2], v[::2, ::2])
-pyplot.xlabel('X')
-pyplot.ylabel('Y')
+plt.quiver(X[::2, ::2], Y[::2, ::2], u[::2, ::2], v[::2, ::2])
+plt.xlabel('X')
+plt.ylabel('Y')
 
-pyplot.show()
+plt.show()
