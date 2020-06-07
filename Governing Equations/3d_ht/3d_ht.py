@@ -59,9 +59,9 @@ while True:
 
     error = pow((error / nps),0.5)
     iteration = iteration + 1
+    print(iteration,error)
     if iteration%100==0:
         err=round(error,5)
-        print(iteration,err
         log.write(f"iteration={iteration},\t\t\terror={err}\n")
     if error < 1e-3 :break
     elif iteration>10000: break
