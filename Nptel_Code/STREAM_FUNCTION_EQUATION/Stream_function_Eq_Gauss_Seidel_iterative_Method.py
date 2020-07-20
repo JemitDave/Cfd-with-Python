@@ -9,7 +9,7 @@
 # step while the Gauss–Seidel method always applies the latest updated
 # values during the iterative procedures
 import numpy as np,csv,os
-os.chdir(r'J:\Python\Cfd_codes\Nptel_Code')
+os.chdir(r'J:\Python\Cfd_codes\Nptel_Code\STREAM_FUNCTION_EQUATION')
 # logging.basicConfig(loggin)
 m=31;n=21 #m for i,j for n
 p=(m-2)*(n-2)       #p=interior points
@@ -19,7 +19,7 @@ dy=4.0/(n-1)
 psi=np.zeros((n,m),dtype=float)
 As=(1.0/(dy**2.0))
 Aw=(1.0/(dx**2.0))
-Ap=-2.0*(   (   1.0/(dx**2.0)  )   + (  1.0/(dx**2.0)   )   )
+Ap=-2.0*(   (   1.0/(dx**2.0)  )   + (  1.0/(dy**2.0)   )   )
 An=(1.0/(dy**2.0))
 Ae=(1.0/(dx**2.0))
 
