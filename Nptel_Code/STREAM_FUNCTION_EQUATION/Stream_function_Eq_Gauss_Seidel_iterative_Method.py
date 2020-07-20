@@ -55,7 +55,7 @@ while error>1e-8:
     error=(error/(m*n))**0.5
     print(f"""
     Iteration={iteration}\nerror={error}""")
-    log.write(f"error for Gauss Seidel Iterative Method")
+    # log.write(f"error for Gauss Seidel Iterative Method")
     log.write(f"\n{iteration}\t{error}")
     iteration+=1
 

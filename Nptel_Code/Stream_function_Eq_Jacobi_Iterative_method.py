@@ -1,5 +1,4 @@
 import numpy as np,csv,os
-from matplotlib import pyplot as plt
 os.chdir(r'J:\Python\Cfd_codes\Nptel_Code')
 # logging.basicConfig(loggin)
 m=31;n=21 #m for i,j for n
