@@ -1,5 +1,5 @@
 #lid driven cavity problem
-
+import messenger
 import os,csv,numpy as np
 from matplotlib import pyplot as plt, cm
 import logging
@@ -32,6 +32,7 @@ v=np.zeros((m,n),dtype='float')
 u[n-1,:]=1.0
 #logging.debug(f"u after ic and bc=\n{u}")
 data=open('error.txt','w')
+data.write(f"Iteration,Error_psi,Error_omega\n")
 #Bc for psi
 """
 We impose normal velocity at each boundary and find bc for psi
@@ -67,7 +68,7 @@ for j in range(0,n):
 
 
 #gs method
-# print('solving using gs')
+print('solving using gs')
 while True:
     print('in loop')
     print(f"iter={iteration},\terr_psi={error_psi},\terror_omega={error_omega}")
@@ -128,11 +129,18 @@ while True:
     error_omega=(error_omega/((m-1)*(n-1)))**0.5
     print(f"err_psi={error_psi},err_ome={error_omega}")
     #logging.debug(f"END OF LOOP\nIteration={iteration}\nerror_psi={error_psi}\terror_omega={error_omega}")
-    data.write(f"{iteration},{error_psi},{error_omega}")
-    if (error_psi<1e-6 and error_omega<1e-3):break
+    data.write(f"{iteration},{error_psi},{error_omega}\n")
+    if (error_psi<1e-4 and error_omega<1e-3):
+        np.savez("vs_data.npz",u=u,v=v,psi=psi,omega=omega)
+        break
     iteration=iteration+1
     if iteration%100==0:
         np.savez("vs_data.npz",u=u,v=v,psi=psi,omega=omega)
+        messenger.send_text(f"""
+    Current iteration={iteration}
+    error_psi={error_psi}
+    error_omega={error_omega}
+    """)
 
 print('out of loop')
  #updating velocities u and v
@@ -142,14 +150,14 @@ for j in range(1, n-1):
         u[j,i]=(0.5/dy) *   (psi[j+1,i]-psi[j-1,i])
         v[j,i] = (-0.5 / dx) * (psi[j,i+1] - psi[j,i-1])
 
-
+data.close()
 #results
-with open('vorti_stream.txt','w') as note:
-    for j in range(n):
-        y=j*dy
-        for i in range(m):
-            x=i*dx
-            note.write(f"{x},{y},{u[j,i]},{v[j,i]},{psi[j,i]},{omega[j,i]}")
+#with open('vorti_stream.txt','w') as note:
+#    for j in range(n):
+#        y=j*dy
+#        for i in range(m):
+#            x=i*dx
+#            note.write(f"{x},{y},{u[j,i]},{v[j,i]},{psi[j,i]},{omega[j,i]}")
 np.savez("vs_data.npz",u=u,v=v,psi=psi,omega=omega)
 # logging.debug(f"""
 # u={u}\n\nv={v}\n\npsi={psi}\n\nomega={omega}
